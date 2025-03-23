@@ -4,7 +4,9 @@ const operandButtons = document.querySelectorAll(".operand-buttons");
 const clearButton = document.querySelector("#clear");
 const signButton = document.querySelector("#sign");
 const decimalButton = document.querySelector("#decimal");
-const OPERANDS = ["+", "-", "x", "÷"];
+const deleteButton = document.querySelector("#delete");
+const changeSignButton = document.querySelector("#sign");
+const OPERANDS = ["+", "-", "x", "÷", "%"];
 
 let expression = expressionContainer.textContent; // Store the expression text
 
@@ -61,6 +63,22 @@ decimalButton.addEventListener("click", () => {
   expressionContainer.textContent = expression;
 });
 
+deleteButton.addEventListener("click", () => {
+  if (!(expression === "Error! Press AC/Number")) {
+    if (OPERANDS.includes(expression[expression.length - 2])) {
+      expression = expression.slice(0, -3);
+    } else {
+      expression = expression.slice(0, -1);
+    }
+  }
+  if (expression === "") {
+    expression = "0";
+    expressionContainer.textContent = expression;
+  } else {
+    expressionContainer.textContent = expression;
+  }
+});
+
 function add(a, b) {
   return a + b;
 }
@@ -75,6 +93,10 @@ function multiply(a, b) {
 
 function divide(a, b) {
   return a / b;
+}
+
+function modulus(a, b) {
+  return a % b;
 }
 
 function operate(operand, a, b) {
@@ -92,8 +114,19 @@ function operate(operand, a, b) {
     case "÷":
       sum = b === 0 ? "Error! Press AC/Number" : divide(a, b);
       break;
+    case "%":
+      sum = modulus(a, b);
   }
   return sum;
+}
+
+function changeSign(numberString) {
+  let number = Number(numberString);
+  if (number > 0) {
+    return String(Math.abs(number) * -1);
+  } else {
+    return String(Math.abs(number));
+  }
 }
 
 function evaluateExpression(evaluationString) {
