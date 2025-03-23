@@ -24,5 +24,5 @@ This is a project from [The Odin Project](https://theodinproject.com): [Project:
 - [x] Performing calculator operations with just two numbers
 - [x] Create an HTML calculator with buttons and display the current equation
 - [x] Making the calculator work and displaying the results
-- [ ] Creating logic for decimals, backspace, clear, change sign buttons
+- [x] Creating logic for decimals, backspace, clear, change sign buttons
 - [ ] Adding keyboard support
