@@ -1,11 +1,24 @@
-let num1 = 3;
-let num2 = 2;
+const expressionContainer = document.querySelector(".expression-container");
+const numberButtons = document.querySelectorAll(".number-buttons");
+const operandButtons = document.querySelectorAll(".operand-buttons");
+const clearButton = document.querySelector("#clear");
 
-console.log(operate("+", num1, num2));
-console.log(operate("-", num1, num2));
-console.log(operate("*", num1, num2));
-console.log(operate("/", num1, num2));
-console.log(operate("/", num1, 0));
+numberButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    expressionContainer.textContent += button.textContent;
+  });
+});
+
+operandButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    expressionContainer.textContent += button.textContent;
+  });
+});
+
+clearButton.addEventListener(
+  "click",
+  () => (expressionContainer.textContent = "")
+);
 
 function add(a, b) {
   return a + b;
