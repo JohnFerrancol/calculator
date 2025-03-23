@@ -20,8 +20,8 @@ This is a project from [The Odin Project](https://theodinproject.com): [Project:
 
 ## Roadmap
 
-- [x] Adding function to do basic math operators (add, subtract, multiply and divide)
-- [ ] Performing calculator operations with just two numbers
+- [x] Adding functions to do basic math operators (add, subtract, multiply and divide)
+- [x] Performing calculator operations with just two numbers
 - [ ] Create an HTML calculator with buttons and display the current equation
 - [ ] Making the calculator work when pressing =
 - [ ] Adding a ., backspace buttons
