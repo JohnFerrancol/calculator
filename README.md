@@ -23,6 +23,6 @@ This is a project from [The Odin Project](https://theodinproject.com): [Project:
 - [x] Adding functions to do basic math operators (add, subtract, multiply and divide)
 - [x] Performing calculator operations with just two numbers
 - [x] Create an HTML calculator with buttons and display the current equation
-- [ ] Making the calculator work and displaying the
+- [x] Making the calculator work and displaying the results
 - [ ] Creating logic for decimals, backspace, clear, change sign buttons
 - [ ] Adding keyboard support

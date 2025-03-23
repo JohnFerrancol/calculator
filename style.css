@@ -10,6 +10,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  font-family: "Inter", sans-serif;
 }
 
 .calculator {
@@ -20,7 +21,7 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 15px;
+  padding: 30px 15px;
   border-radius: 10px;
 }
 
@@ -35,6 +36,8 @@ body {
   font-size: 30px;
   border: none;
   color: #d4d4d2;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 
 .button-container {

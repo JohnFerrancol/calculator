@@ -4,12 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Odin Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
     <script src="./script.js" defer></script>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <main class="calculator">
-      <div class="expression-container"></div>
+      <div class="expression-container">0</div>
       <div class="button-container">
         <button id="clear" class="top-buttons">AC</button>
         <button id="sign" class="top-buttons">+/-</button>
@@ -34,7 +40,7 @@
         <button id="delete">DEL</button>
         <button id="zero" class="number-buttons">0</button>
         <button id="decimal">.</button>
-        <button id="evaluate" class="operand-buttons">-</button>
+        <button id="evaluate" class="operand-buttons">=</button>
       </div>
     </main>
   </body>
