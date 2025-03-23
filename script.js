@@ -5,42 +5,44 @@ const clearButton = document.querySelector("#clear");
 const signButton = document.querySelector("#sign");
 const OPERANDS = ["+", "-", "x", "÷"];
 
+let expression = expressionContainer.textContent; // Store the expression text
+
 numberButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    if (expressionContainer.textContent === "0") {
-      expressionContainer.textContent = button.textContent;
+    if (expression === "0") {
+      expression = button.textContent;
     } else {
-      expressionContainer.textContent += button.textContent;
+      expression += button.textContent;
     }
+    expressionContainer.textContent = expression;
   });
 });
 
 operandButtons.forEach((button) => {
   button.addEventListener("click", () => {
     if (button.textContent === "=") {
-      let result = evaluateExpression(expressionContainer.textContent);
-      if (!(result === undefined)) {
-        expressionContainer.textContent = String(result);
+      let result = evaluateExpression(expression);
+      if (!(result === "invalid expression")) {
+        expression = String(result);
       }
-    } else if (
-      OPERANDS.some((op) => expressionContainer.textContent.includes(op))
-    ) {
-      let result = evaluateExpression(expressionContainer.textContent);
-      if (!(result === 0 || result === "Undefined")) {
-        expressionContainer.textContent = `${String(result)} ${
-          button.textContent
-        } `;
+    } else if (OPERANDS.some((op) => expression.includes(op))) {
+      if (OPERANDS.includes(expression[expression.length - 2])) {
+        expression = expression.slice(0, -3) + ` ${button.textContent} `;
+      } else {
+        let result = evaluateExpression(expression);
+        expression = `${String(result)} ${button.textContent} `;
       }
     } else {
-      expressionContainer.textContent += ` ${button.textContent} `;
+      expression += ` ${button.textContent} `;
     }
+    expressionContainer.textContent = expression;
   });
 });
 
-clearButton.addEventListener(
-  "click",
-  () => (expressionContainer.textContent = "0")
-);
+clearButton.addEventListener("click", () => {
+  expression = "0";
+  expressionContainer.textContent = expression;
+});
 
 function add(a, b) {
   return a + b;
@@ -71,16 +73,19 @@ function operate(operand, a, b) {
       sum = multiply(a, b);
       break;
     case "÷":
-      // Return an error if the user wants to divide by 0
       sum = b === 0 ? "Undefined" : divide(a, b);
       break;
   }
-
   return sum;
 }
 
 function evaluateExpression(evaluationString) {
   let evaluationArray = evaluationString.split(" ");
+
+  if (evaluationArray.length != 3 || evaluationArray[2] === "") {
+    return "invalid expression";
+  }
+
   let sum = operate(
     evaluationArray[1],
     Number(evaluationArray[0]),
