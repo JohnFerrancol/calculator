@@ -3,13 +3,14 @@ const numberButtons = document.querySelectorAll(".number-buttons");
 const operandButtons = document.querySelectorAll(".operand-buttons");
 const clearButton = document.querySelector("#clear");
 const signButton = document.querySelector("#sign");
+const decimalButton = document.querySelector("#decimal");
 const OPERANDS = ["+", "-", "x", "÷"];
 
 let expression = expressionContainer.textContent; // Store the expression text
 
 numberButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    if (expression === "0") {
+    if (expression === "0" || expression === "Error! Press AC/Number") {
       expression = button.textContent;
     } else {
       expression += button.textContent;
@@ -20,20 +21,22 @@ numberButtons.forEach((button) => {
 
 operandButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    if (button.textContent === "=") {
-      let result = evaluateExpression(expression);
-      if (!(result === "invalid expression")) {
-        expression = String(result);
-      }
-    } else if (OPERANDS.some((op) => expression.includes(op))) {
-      if (OPERANDS.includes(expression[expression.length - 2])) {
-        expression = expression.slice(0, -3) + ` ${button.textContent} `;
-      } else {
+    if (!(expression === "Error! Press AC/Number")) {
+      if (button.textContent === "=") {
         let result = evaluateExpression(expression);
-        expression = `${String(result)} ${button.textContent} `;
+        if (!(result === "invalid expression")) {
+          expression = String(result);
+        }
+      } else if (OPERANDS.some((op) => expression.includes(op))) {
+        if (OPERANDS.includes(expression[expression.length - 2])) {
+          expression = expression.slice(0, -3) + ` ${button.textContent} `;
+        } else {
+          let result = evaluateExpression(expression);
+          expression = `${String(result)} ${button.textContent} `;
+        }
+      } else {
+        expression += ` ${button.textContent} `;
       }
-    } else {
-      expression += ` ${button.textContent} `;
     }
     expressionContainer.textContent = expression;
   });
@@ -41,6 +44,20 @@ operandButtons.forEach((button) => {
 
 clearButton.addEventListener("click", () => {
   expression = "0";
+  expressionContainer.textContent = expression;
+});
+
+decimalButton.addEventListener("click", () => {
+  let expressionArray = expression.split(" ");
+  let num1 = expressionArray.length === 1 ? expressionArray[0] : "";
+  let num2 = expressionArray.length === 3 ? expressionArray[2] : "";
+  if (!(num1.includes(".") || num2.includes("."))) {
+    if (OPERANDS.includes(expression[expression.length - 2])) {
+      expression += "0.";
+    } else {
+      expression += ".";
+    }
+  }
   expressionContainer.textContent = expression;
 });
 
@@ -73,7 +90,7 @@ function operate(operand, a, b) {
       sum = multiply(a, b);
       break;
     case "÷":
-      sum = b === 0 ? "Undefined" : divide(a, b);
+      sum = b === 0 ? "Error! Press AC/Number" : divide(a, b);
       break;
   }
   return sum;
