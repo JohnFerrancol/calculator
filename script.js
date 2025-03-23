@@ -23,13 +23,24 @@ numberButtons.forEach((button) => {
 
 operandButtons.forEach((button) => {
   button.addEventListener("click", () => {
+    let containsSign = false;
+    let expressionArray = expression.split(" ");
+    if (expressionArray.length === 1) {
+      containsSign = expressionArray[0].startsWith("-") ? true : false;
+    } else if (expressionArray.length === 3) {
+      containsSign = expressionArray[0].startsWith("-") ? true : false;
+      containsSign = expressionArray[2].startsWith("-") ? true : false;
+    }
     if (!(expression === "Error! Press AC/Number")) {
       if (button.textContent === "=") {
         let result = evaluateExpression(expression);
         if (!(result === "invalid expression")) {
           expression = String(result);
         }
-      } else if (OPERANDS.some((op) => expression.includes(op))) {
+      } else if (
+        OPERANDS.some((op) => expression.includes(op)) &&
+        !containsSign
+      ) {
         if (OPERANDS.includes(expression[expression.length - 2])) {
           expression = expression.slice(0, -3) + ` ${button.textContent} `;
         } else {
@@ -60,6 +71,23 @@ decimalButton.addEventListener("click", () => {
       expression += ".";
     }
   }
+  expressionContainer.textContent = expression;
+});
+
+changeSignButton.addEventListener("click", () => {
+  let expressionArray = expression.split(" ");
+  if (expressionArray.length === 1) {
+    expression = expression.startsWith("-")
+      ? expression.slice(1)
+      : `-${expression}`;
+  } else if (expressionArray.length === 3) {
+    let lastIndex = expressionArray.length - 1;
+    expressionArray[lastIndex] = expressionArray[lastIndex].startsWith("-")
+      ? expression.slice(1)
+      : `-${expressionArray[lastIndex]}`;
+    expression = expressionArray.join(" ");
+  }
+
   expressionContainer.textContent = expression;
 });
 
@@ -118,15 +146,6 @@ function operate(operand, a, b) {
       sum = modulus(a, b);
   }
   return sum;
-}
-
-function changeSign(numberString) {
-  let number = Number(numberString);
-  if (number > 0) {
-    return String(Math.abs(number) * -1);
-  } else {
-    return String(Math.abs(number));
-  }
 }
 
 function evaluateExpression(evaluationString) {
